@@ -19,6 +19,8 @@ function runFile(code: string, response: functions.Response) {
 }
 
 export const run = functions.https.onRequest((request, response) => {
+  response.set("Access-Control-Allow-Origin", "*");
+  response.setHeader("Access-Control-Allow-Headers", "Content-Type");
   if (request.body.code) return runFile(request.body.code, response);
   try {
     if (JSON.parse(request.body).code)

@@ -4,32 +4,38 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Welcome to Firebase Hosting</title>
+  <title>Online IDE</title>
+
+  <link rel="stylesheet" href="./css/index.css">
 
   <!-- update the version number as needed -->
-  <script defer src="/__/firebase/7.7.0/firebase-app.js"></script>
+  <script src="/__/firebase/7.7.0/firebase-app.js"></script>
   <!-- include only the Firebase features as you need -->
-  <script defer src="/__/firebase/7.7.0/firebase-auth.js"></script>
-  <script defer src="/__/firebase/7.7.0/firebase-database.js"></script>
-  <script defer src="/__/firebase/7.7.0/firebase-messaging.js"></script>
-  <script defer src="/__/firebase/7.7.0/firebase-storage.js"></script>
+  <script src="/__/firebase/7.7.0/firebase-auth.js"></script>
+  <!--Firebase auth-UI-->
+  <script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
+  <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
   <!-- initialize the SDK after all desired features are loaded -->
-  <script defer src="/__/firebase/init.js"></script>
+  <script src="/__/firebase/init.js"></script>
+  <script defer src="./scripts/index.js"></script>
 
 </head>
 
 <body>
-  <div id="message">
-    <h2>Welcome</h2>
-    <h1>Online Code Runner</h1>
-    <form action="http://localhost:1026/online-ide-1/us-central1/run" method="post">
-      <input type="text" name="code">
-      <input type="submit">
-    </form>
+  <div id="signin" class="wrapper fadeInDown">
+    <div class="formContent">
+      <!-- Tabs Titles -->
+      <h2 class="active">Sign In </h2>
+
+      <!-- Login Form -->
+      <div id="firebaseui-auth-container"></div>
+      <!-- Remind Passowrd -->
+      <div class="formFooter">
+        <a class="underlineHover" href="#">Forgot Password?</a>
+      </div>
+
+    </div>
   </div>
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {});
-  </script>
 </body>
 
 </html>
