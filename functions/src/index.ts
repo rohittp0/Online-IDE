@@ -1,32 +1,30 @@
 import * as functions from "firebase-functions";
 import { spawn } from "child_process";
 
-function runFile(code: string) {
+function runFile(code: string, response: functions.Response) {
+  const python = spawn("python3", ["-c", code]);
   const responseJSON = { output: "", error: "", code: 0 };
 
-  return new Promise((resolve, reject) => {
-    const python = spawn("python3", ["-c", code]);
-    python.stdin.end();
-    python.stdout.on("data", (data: string) => (responseJSON.output += data));
-    python.stderr.on(
-      "data",
-      (data: { toString: () => string }) =>
-        (responseJSON.error += data.toString())
-    );
-    python.on("close", (exitCode: string) => {
-      responseJSON.code = Number(exitCode);
-      resolve(responseJSON);
-    });
+  python.stdin.end();
+  python.stdout.on("data", (data: string) => (responseJSON.output += data));
+  python.stderr.on(
+    "data",
+    (data: { toString: () => string }) =>
+      (responseJSON.error += data.toString())
+  );
+  python.on("close", (Exitcode: string) => {
+    responseJSON.code = Number(Exitcode);
+    response.json(responseJSON);
   });
 }
 
 export const run = functions.https.onRequest((request, response) => {
-  response.set("Access-Control-Allow-Origin", "*");
-  response.setHeader("Access-Control-Allow-Headers", "Content-Type");
-  if (request.body.code) return runFile(request.body.code).then(response.json);
   try {
-    if (JSON.parse(request.body).code)
-      return runFile(JSON.parse(request.body).code).then(response.json);
-  } catch (error) {}
-  return response.json({ error: "Please send a vaild post request." });
+    if (request.body.code) runFile(request.body.code, response);
+    else if (JSON.parse(request.body).code)
+      runFile(JSON.parse(request.body).code, response);
+    else response.json({ error: "Please send a vaild post request.", code: 1 });
+  } catch (error) {
+    console.error(error);
+  }
 });

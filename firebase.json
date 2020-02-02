@@ -16,12 +16,10 @@
       "**/.*",
       "**/node_modules/**"
     ],
-    "rewrites": [
-      {
-        "source": "**",
-        "destination": "/index.html"
-      }
-    ]
+    "rewrites": [{
+      "source": "/function/run",
+      "function": "run"
+    }]
   },
   "storage": {
     "rules": "storage.rules"

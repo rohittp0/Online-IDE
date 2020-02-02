@@ -1,0 +1,16 @@
+.output {
+  background-color: darkgray;
+  width: 100%;
+  height: 22.5vw;
+  color: black;
+  padding: 0.5%;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.error {
+  color: red;
+}
+
+body {
+  background-color: darkgray;
+}
